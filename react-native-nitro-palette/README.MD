@@ -35,7 +35,7 @@ import { getPaletteAsync } from 'react-native-nitro-palette';
 
 // Extract colors from a local image
 const colors = await getPaletteAsync(
-  'file:///path/to/image.jpg',  // local file path, remote URL, or base64 data
+  https://example.jpg,  // remote URL
   5,                            // number of colors to extract (default: 5)
   10,                           // quality (1 = best, 10 = fastest, default: 10)
   true                         // ignore white colors (default: true)
