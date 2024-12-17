@@ -1,7 +1,7 @@
 {
   "name": "react-native-nitro-palette",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": "https://github.com/ucekay/react-native-nitro-palette.git",
   "author": "Ucekay",
   "scripts": {
