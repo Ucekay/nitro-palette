@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/patrickkabwe/create-nitro-module/refs/heads/main/assets/nitro-schema.json",
+  "cxxNamespace": [
+    "nitropalette"
+  ],
+  "ios": {
+    "iosModuleName": "NitroPalette"
+  },
+  "android": {
+    "androidNamespace": [
+      "nitropalette"
+    ],
+    "androidCxxLibName": "NitroPalette"
+  },
+  "autolinking": {
+    "NitroPalette": {
+      "cpp": "NitroPalette"
+    }
+  },
+  "ignorePaths": [
+    "node_modules"
+  ]
+}

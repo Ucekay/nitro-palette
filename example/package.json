@@ -1,0 +1,42 @@
+{
+	"name": "nitro-example",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"android": "react-native run-android",
+		"ios": "react-native run-ios --simulator='iPhone 16'",
+		"lint": "eslint .",
+		"start": "react-native start --reset-cache",
+		"test": "jest",
+		"pod": "pod install --project-directory=ios"
+	},
+	"dependencies": {
+		"@shopify/react-native-skia": "^1.6.0",
+		"react": "18.3.1",
+		"react-native": "0.76.3",
+		"react-native-color-palette": "^2.2.0",
+		"react-native-color-thief": "^0.3.4",
+		"react-native-nitro-modules": "*"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.25.2",
+		"@babel/preset-env": "^7.25.3",
+		"@babel/runtime": "^7.25.0",
+		"@biomejs/biome": "^1.9.4",
+		"@react-native-community/cli": "15.0.1",
+		"@react-native-community/cli-platform-android": "15.0.1",
+		"@react-native-community/cli-platform-ios": "15.0.1",
+		"@react-native/babel-preset": "0.76.3",
+		"@react-native/metro-config": "0.76.3",
+		"@react-native/typescript-config": "0.76.3",
+		"@types/react": "^18.2.6",
+		"@types/react-test-renderer": "^18.0.0",
+		"babel-jest": "^29.6.3",
+		"jest": "^29.6.3",
+		"react-test-renderer": "18.3.1",
+		"typescript": "5.0.4"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
