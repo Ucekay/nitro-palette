@@ -78,3 +78,5 @@ android/keystores/debug.keystore
 lib/
 
 *.tsbuildinfo
+
+*.env
