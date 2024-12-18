@@ -13,6 +13,7 @@ A color palette package for React Native/Expo that extracts dominant colors from
 ## Demo
 
 ### Remote Image Color Extraction
+https://github.com/user-attachments/assets/78b2f760-7345-423a-9eaa-1d3558baafe3
 
 ### Device Library Image Color Extraction
 
