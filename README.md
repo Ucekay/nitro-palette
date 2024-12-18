@@ -10,6 +10,12 @@ A color palette package for React Native/Expo that extracts dominant colors from
 - Option to filter out white/transparent colors
 - Full TypeScript support
 
+## Demo
+
+### Remote Image Color Extraction
+
+### Device Library Image Color Extraction
+
 ## Usage
 
 For detailed implementation examples and usage instructions, please see the README.md in the react-native-nitro-palette directory.
