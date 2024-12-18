@@ -1,6 +1,8 @@
 import {
 	AlphaType,
 	ColorType,
+	type DataSourceParam,
+	type SkImage,
 	Skia,
 	loadData,
 } from "@shopify/react-native-skia";
@@ -9,13 +11,19 @@ import { NitroPalette } from "./specs";
 const imgFactory = Skia.Image.MakeImageFromEncoded.bind(Skia.Image);
 
 export const getPaletteAsync = async (
-	source: string,
+	source: DataSourceParam | string,
 	colorCount = 5,
 	quality = 10,
 	ignoreWhite = true,
 ): Promise<string[]> => {
 	try {
-		const image = await loadData(source, imgFactory);
+		let image: SkImage | null = null;
+		if (typeof source === "string" && source.startsWith("file://")) {
+			const imageData = await Skia.Data.fromURI(source);
+			image = Skia.Image.MakeImageFromEncoded(imageData);
+		} else {
+			image = await loadData(source, imgFactory);
+		}
 		if (!image) {
 			throw new Error("Failed to create image");
 		}
