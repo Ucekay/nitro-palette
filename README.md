@@ -3,10 +3,12 @@
 A color palette package for React Native/Expo that extracts dominant colors from images.
 
 ## Features
-
-- Color extraction from images
-
-## Project Structure
+- High-performance color extraction powered by C++ implementation using Nitro Modules
+- Support for both local and remote images
+- Customizable number of colors to extract
+- Adjustable quality settings for performance optimization
+- Option to filter out white/transparent colors
+- Full TypeScript support
 
 ## Usage
 
