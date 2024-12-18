@@ -58,7 +58,6 @@ NitroPalette::extractColorsAsync(const std::shared_ptr<ArrayBuffer>& source,
     throw std::runtime_error("Invalid source buffer data");
   }
 
-  // std::vector を使用してメモリを管理
   std::vector<uint8_t> sourceCopy(sourceData, sourceData + sourceSize);
 
   return Promise<std::vector<std::string>>::async(
@@ -74,10 +73,6 @@ NitroPalette::extractColorsAsync(const std::shared_ptr<ArrayBuffer>& source,
         const double clampedColorCount = std::clamp(colorCount, 1.0, 20.0);
         const double clampedQuality = std::clamp(quality, 1.0, 10.0);
         const int colorCountInt = static_cast<int>(clampedColorCount);
-
-        // auto pixels = sourceCopy.data();
-        // std::vector<uint8_t> pixelsVector(pixels, pixels +
-        // currentImageSize_);
 
         auto colorMap =
             MMCQ::quantize(sourceCopy, colorCountInt,
