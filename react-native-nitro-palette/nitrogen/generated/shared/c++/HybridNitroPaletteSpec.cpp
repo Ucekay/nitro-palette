@@ -15,6 +15,7 @@ namespace margelo::nitro::nitropalette {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("extractColors", &HybridNitroPaletteSpec::extractColors);
+      prototype.registerHybridMethod("extractColorsAsync", &HybridNitroPaletteSpec::extractColorsAsync);
     });
   }
 

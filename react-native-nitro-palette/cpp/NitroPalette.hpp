@@ -14,6 +14,10 @@ class NitroPalette : public HybridNitroPaletteSpec {
       const std::shared_ptr<ArrayBuffer>& source, double colorCount,
       double quality, bool ignoreWhite) override;
 
+  std::shared_ptr<Promise<std::vector<std::string>>> extractColorsAsync(
+      const std::shared_ptr<ArrayBuffer>& source, double colorCount,
+      double quality, bool ignoreWhite) override;
+
   size_t getExternalMemorySize() noexcept override {
     return sizeof(NitroPalette) + currentImageSize_;
   }

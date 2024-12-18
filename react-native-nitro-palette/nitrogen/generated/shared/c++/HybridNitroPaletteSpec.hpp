@@ -19,6 +19,7 @@ namespace NitroModules { class ArrayBuffer; }
 #include <vector>
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
+#include <NitroModules/Promise.hpp>
 
 namespace margelo::nitro::nitropalette {
 
@@ -52,6 +53,7 @@ namespace margelo::nitro::nitropalette {
     public:
       // Methods
       virtual std::vector<std::string> extractColors(const std::shared_ptr<ArrayBuffer>& source, double colorCount, double quality, bool ignoreWhite) = 0;
+      virtual std::shared_ptr<Promise<std::vector<std::string>>> extractColorsAsync(const std::shared_ptr<ArrayBuffer>& source, double colorCount, double quality, bool ignoreWhite) = 0;
 
     protected:
       // Hybrid Setup

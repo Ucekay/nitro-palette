@@ -33,15 +33,31 @@ cd ios && pod install
 ```typescript
 import { getPaletteAsync } from 'react-native-nitro-palette';
 
-// Extract colors from a local image
-const colors = await getPaletteAsync(
-  https://example.jpg,  // remote URL
+// Extract colors from a remote URL
+const colors1 = await getPaletteAsync(
+  'https://example.jpg',
   5,                            // number of colors to extract (default: 5)
   10,                           // quality (1 = best, 10 = fastest, default: 10)
   true                         // ignore white colors (default: true)
 );
 
-console.log(colors); // ['rgb(255,0,0)', 'rgb(0,255,0)', ...]
+// Extract colors from a JS Bundle
+const colors2 = await getPaletteAsync(
+  require('./assets/logo.jpg'),
+  5,
+  10,
+  true
+)
+
+// Extract colors from a local image uri
+const colors3 = await getPaletteAsync(
+  'file://...',
+  5,
+  10,
+  true
+)
+
+console.log(colors1); // ['rgb(255,0,0)', 'rgb(0,255,0)', ...]
 ```
 
 ## API Reference

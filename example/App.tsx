@@ -34,7 +34,7 @@ export default function App() {
 			"nitro-palette",
 			async () => {
 				try {
-					const colors = await getPaletteAsync(IMAGES[index], 5, 1, true);
+					const colors = await getPaletteAsync(IMAGES[index], 5, 10, true);
 					setPalette(colors);
 				} catch (error) {
 					console.error(error);

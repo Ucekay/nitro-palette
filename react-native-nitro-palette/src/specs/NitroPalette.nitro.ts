@@ -8,4 +8,10 @@ export interface NitroPalette
 		quality: number,
 		ignoreWhite: boolean,
 	): string[];
+	extractColorsAsync(
+		source: ArrayBuffer,
+		colorCount: number,
+		quality: number,
+		ignoreWhite: boolean,
+	): Promise<string[]>;
 }

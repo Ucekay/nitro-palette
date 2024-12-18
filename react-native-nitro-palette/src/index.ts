@@ -28,7 +28,7 @@ export const getPaletteAsync = async (
 		if (!pixels) {
 			throw new Error("Failed to read pixels");
 		}
-		return NitroPalette.extractColors(
+		return NitroPalette.extractColorsAsync(
 			pixels.buffer as ArrayBuffer,
 			colorCount,
 			quality,
