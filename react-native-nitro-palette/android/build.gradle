@@ -5,7 +5,8 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:8.8.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
   }
 }
 
@@ -71,22 +72,22 @@ android {
 
   packagingOptions {
     excludes = [
-            "META-INF",
-            "META-INF/**",
-            "**/libc++_shared.so",
-            "**/libfbjni.so",
-            "**/libjsi.so",
-            "**/libfolly_json.so",
-            "**/libfolly_runtime.so",
-            "**/libglog.so",
-            "**/libhermes.so",
-            "**/libhermes-executor-debug.so",
-            "**/libhermes_executor.so",
-            "**/libreactnative.so",
-            "**/libreactnativejni.so",
-            "**/libturbomodulejsijni.so",
-            "**/libreact_nativemodule_core.so",
-            "**/libjscexecutor.so"
+        "META-INF",
+        "META-INF/**",
+        "**/libc++_shared.so",
+        "**/libfbjni.so",
+        "**/libjsi.so",
+        "**/libfolly_json.so",
+        "**/libfolly_runtime.so",
+        "**/libglog.so",
+        "**/libhermes.so",
+        "**/libhermes-executor-debug.so",
+        "**/libhermes_executor.so",
+        "**/libreactnative.so",
+        "**/libreactnativejni.so",
+        "**/libturbomodulejsijni.so",
+        "**/libreact_nativemodule_core.so",
+        "**/libjscexecutor.so"
     ]
   }
 
@@ -96,6 +97,9 @@ android {
   }
 
   buildTypes {
+    debug {
+      minifyEnabled false
+    }
     release {
       minifyEnabled false
     }
@@ -106,8 +110,12 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
   }
 
   sourceSets {
@@ -122,11 +130,21 @@ android {
   }
 }
 
+configurations {
+    implementation {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+    api {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
 repositories {
   mavenCentral()
   google()
 }
-
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
@@ -138,3 +156,10 @@ dependencies {
   implementation project(":react-native-nitro-modules")
 }
 
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "NitroPalette"
+    codegenJavaPackageName = "com.nitropalette"
+  }
+}

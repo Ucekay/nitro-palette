@@ -1,6 +1,11 @@
 pluginManagement { includeBuild("../../node_modules/@react-native/gradle-plugin") }
 plugins { id("com.facebook.react.settings") }
-extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> 
+    ex.autolinkLibrariesFromCommand()
+}
 rootProject.name = 'NitroExample'
 include ':app'
 includeBuild('../../node_modules/@react-native/gradle-plugin')
+
+include ':react-native-nitro-palette'
+project(':react-native-nitro-palette').projectDir = new File(rootProject.projectDir, '../../react-native-nitro-palette/android')
