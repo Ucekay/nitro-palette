@@ -51,17 +51,17 @@
 		"access": "public"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@shopify/react-native-skia": "^1.7.0",
-		"@types/jest": "^29.5.12",
-		"@types/react": "^18.3.4",
-		"nitro-codegen": "*",
+		"@biomejs/biome": "^2.0.0-beta.1",
+		"@shopify/react-native-skia": "^1.12.4",
+		"@types/jest": "^29.5.14",
+		"@types/react": "^18.3.20",
+		"nitro-codegen": "^0.25.2",
 		"react": "^18.3.1",
-		"react-native": "^0.76.3",
-		"react-native-builder-bob": "^0.30.2",
-		"react-native-nitro-modules": "*",
-		"release-it": "^17.6.0",
-		"typescript": "^5.5.4"
+		"react-native": "^0.76.9",
+		"react-native-builder-bob": "^0.30.3",
+		"react-native-nitro-modules": "^0.25.2",
+		"release-it": "^17.11.0",
+		"typescript": "^5.8.3"
 	},
 	"peerDependencies": {
 		"react": "*",
