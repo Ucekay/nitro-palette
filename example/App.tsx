@@ -9,6 +9,7 @@ import {
 	View,
 	useWindowDimensions,
 } from "react-native";
+
 import RNColorThief from "react-native-color-thief";
 import { getPaletteAsync } from "react-native-nitro-palette";
 import { benchmark } from "./utils/performance-benchmark";
