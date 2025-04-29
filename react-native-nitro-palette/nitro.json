@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/patrickkabwe/create-nitro-module/refs/heads/main/assets/nitro-schema.json",
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
   "cxxNamespace": [
     "nitropalette"
   ],
