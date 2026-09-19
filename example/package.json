@@ -9,7 +9,7 @@
     "react": "19.2.3",
     "react-native": "0.88.0-rc.0",
     "react-native-color-thief": "^0.3.4",
-    "react-native-nitro-modules": "^0.25.2",
+    "react-native-nitro-modules": "^0.37.1",
     "react-native-nitro-palette": "workspace:*"
   },
   "devDependencies": {

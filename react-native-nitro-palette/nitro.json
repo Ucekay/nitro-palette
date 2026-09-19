@@ -14,7 +14,10 @@
   },
   "autolinking": {
     "NitroPalette": {
-      "cpp": "NitroPalette"
+      "all": {
+        "language": "c++",
+        "implementationClassName": "NitroPalette"
+      }
     }
   },
   "ignorePaths": [
