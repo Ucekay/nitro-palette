@@ -123,8 +123,8 @@ MMCQ::Color MMCQ::VBox::getAverage(bool forceRecalculation) const {
   if (!forceRecalculation && average.has_value()) {
     return average.value();
   } else {
-    int histogramValueSum = 0;
-    int rSum = 0, gSum = 0, bSum = 0;
+    int64_t histogramValueSum = 0;
+    int64_t rSum = 0, gSum = 0, bSum = 0;
 
     for (int i = rMin; i <= rMax; i++) {
       for (int j = gMin; j <= gMax; j++) {
@@ -135,9 +135,9 @@ MMCQ::Color MMCQ::VBox::getAverage(bool forceRecalculation) const {
             continue;
           }
           histogramValueSum += histogramValue;
-          rSum += static_cast<int>(histogramValue * (i + 0.5) * MULTIPLIER);
-          gSum += static_cast<int>(histogramValue * (j + 0.5) * MULTIPLIER);
-          bSum += static_cast<int>(histogramValue * (k + 0.5) * MULTIPLIER);
+          rSum += static_cast<int64_t>(histogramValue * (i + 0.5) * MULTIPLIER);
+          gSum += static_cast<int64_t>(histogramValue * (j + 0.5) * MULTIPLIER);
+          bSum += static_cast<int64_t>(histogramValue * (k + 0.5) * MULTIPLIER);
         }
       }
     }
@@ -193,10 +193,12 @@ std::unique_ptr<MMCQ::ColorMap> MMCQ::quantize(
       makeHistogramAndBox(pixels, quality, ignoreWhite);
   std::vector<VBox> pqueue;
   pqueue.push_back(histogramAndBox.second);
-  int target = static_cast<int>(FRACTION_BY_POPULATION * maxColors);
+  size_t target =
+      static_cast<size_t>(std::ceil(FRACTION_BY_POPULATION * maxColors));
   iterate(pqueue, compareByCount, target, histogramAndBox.first);
   std::sort(pqueue.begin(), pqueue.end(), compareByProduct);
-  iterate(pqueue, compareByProduct, maxColors, histogramAndBox.first);
+  iterate(pqueue, compareByProduct, static_cast<size_t>(maxColors),
+          histogramAndBox.first);
   std::reverse(pqueue.begin(), pqueue.end());
 
   MMCQ::ColorMap colorMap;
@@ -229,7 +231,7 @@ MMCQ::makeHistogramAndBox(
     uint8_t b = pixels[i * 4 + 2];
     uint8_t a = pixels[i * 4 + 3];
 
-    if (a <= 125 || (ignoreWhite && r > 250 && g > 250 && b > 250)) {
+    if (a < 125 || (ignoreWhite && r > 250 && g > 250 && b > 250)) {
       continue;
     }
 
@@ -319,7 +321,7 @@ std::vector<MMCQ::VBox, std::allocator<MMCQ::VBox>> MMCQ::applyMedianCut(
   }
 
   std::vector<int> lookAheadSum(VBOX_LENGTH, -1);
-  for (int i = vboxMin; i < vboxMax; i++) {
+  for (int i = vboxMin; i <= vboxMax; i++) {
     int cumulativeSum = partialSum[i];
     if (cumulativeSum != -1) {
       lookAheadSum[i] = total - cumulativeSum;
@@ -334,21 +336,21 @@ std::vector<MMCQ::VBox> MMCQ::cut(ColorChannel axis, const VBox& vbox,
                                   const std::vector<int>& partialSum,
                                   const std::vector<int>& lookAheadSum,
                                   int total) {
+  // partialSum is non-decreasing over [vboxMin, vboxMax], so this finds the
+  // first slice whose cumulative sum exceeds half of the total.
   int left = vboxMin;
   int right = vboxMax;
-  int splitPoint = vboxMin;
-
-  while (left <= right) {
+  while (left < right) {
     int mid = left + (right - left) / 2;
-    if (partialSum[mid] <= total / 2) {
-      left = mid + 1;
+    if (partialSum[mid] > total / 2) {
+      right = mid;
     } else {
-      right = mid - 1;
+      left = mid + 1;
     }
   }
-  splitPoint = right;
+  int splitPoint = left;
 
-  if (splitPoint >= vboxMin && splitPoint < vboxMax) {
+  if (partialSum[splitPoint] > total / 2) {
     MMCQ::VBox vbox1(vbox);
     MMCQ::VBox vbox2(vbox);
 
@@ -359,7 +361,8 @@ std::vector<MMCQ::VBox> MMCQ::cut(ColorChannel axis, const VBox& vbox,
     if (left <= right) {
       d2 = std::min(vboxMax - 1, splitPoint + right / 2);
     } else {
-      d2 = std::max(vboxMin, splitPoint - 1 - left / 2);
+      // Truncate toward zero to match the original implementation.
+      d2 = std::max(vboxMin, static_cast<int>((splitPoint - 1) - left / 2.0));
     }
 
     while (d2 < 0 || partialSum[d2] <= 0) {
@@ -393,7 +396,7 @@ std::vector<MMCQ::VBox> MMCQ::cut(ColorChannel axis, const VBox& vbox,
 }
 
 void MMCQ::iterate(std::vector<VBox>& queue,
-                   bool (*comparator)(const VBox&, const VBox&), int target,
+                   bool (*comparator)(const VBox&, const VBox&), size_t target,
                    const std::vector<int>& histogram) {
   int niters = 0;
   while (niters < MAX_ITERATIONS) {
@@ -412,7 +415,9 @@ void MMCQ::iterate(std::vector<VBox>& queue,
 
     std::vector<VBox> vboxes = applyMedianCut(histogram, vbox);
     if (vboxes.empty()) {
-      continue;
+      // Should not happen for a non-empty box; keep it instead of losing it.
+      queue.push_back(vbox);
+      return;
     };
     queue.push_back(vboxes[0]);
     if (vboxes.size() == 2) {

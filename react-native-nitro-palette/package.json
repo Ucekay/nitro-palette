@@ -33,6 +33,7 @@
 		"postinstall": "bun build || exit 0;",
 		"build": "rm -rf lib && bun typecheck && bob build",
 		"typecheck": "tsc --noEmit",
+		"test:cpp": "mkdir -p build && clang++ -std=c++20 -O2 -Wall -Wextra -Icpp tests/cpp/MMCQTest.cpp cpp/MMCQ.cpp -o build/mmcq-test && ./build/mmcq-test",
 		"clean": "rm -rf android/build node_modules/**/android/build lib android/.cxx node_modules/**/android/.cxx",
 		"release": "release-it",
 		"codegen": "bun typecheck && nitrogen --logLevel=\"debug\"",
