@@ -35,7 +35,7 @@
 		"typecheck": "tsc --noEmit",
 		"clean": "rm -rf android/build node_modules/**/android/build lib android/.cxx node_modules/**/android/.cxx",
 		"release": "release-it",
-		"codegen": "bun typecheck && nitro-codegen --logLevel=\"debug\"",
+		"codegen": "bun typecheck && nitrogen --logLevel=\"debug\"",
 		"postcodegen": "bun run build"
 	},
 	"keywords": [
@@ -55,18 +55,18 @@
 		"@shopify/react-native-skia": "^1.12.4",
 		"@types/jest": "^29.5.14",
 		"@types/react": "^19.1.2",
-		"nitro-codegen": "^0.25.2",
+		"nitrogen": "^0.37.1",
 		"react": "19.0.0",
 		"react-native": "^0.79.1",
 		"react-native-builder-bob": "^0.40.6",
-		"react-native-nitro-modules": "^0.25.2",
+		"react-native-nitro-modules": "^0.37.1",
 		"release-it": "^19.0.1",
 		"typescript": "^5.8.3"
 	},
 	"peerDependencies": {
 		"react": "*",
 		"react-native": "*",
-		"react-native-nitro-modules": "*",
+		"react-native-nitro-modules": "^0.37.1",
 		"@shopify/react-native-skia": "*"
 	},
 	"release-it": {

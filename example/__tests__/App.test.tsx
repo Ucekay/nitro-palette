@@ -2,16 +2,24 @@
  * @format
  */
 
-import 'react-native';
-import React from 'react';
-import App from '../App';
+import "react-native";
+import App from "../App";
 
 // Note: import explicitly to use the types shipped with jest.
-import {it} from '@jest/globals';
+import { it, jest } from "@jest/globals";
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import renderer from "react-test-renderer";
 
-it('renders correctly', () => {
-  renderer.create(<App />);
+// Nitro / Skia / color-thief need their native runtime, which Jest doesn't have.
+jest.mock("react-native-nitro-palette", () => ({
+	getPaletteAsync: async () => [],
+}));
+jest.mock("react-native-color-thief", () => ({
+	__esModule: true,
+	default: { getColor: async () => ({}), getPalette: async () => [] },
+}));
+
+it("renders correctly", () => {
+	renderer.create(<App />);
 });

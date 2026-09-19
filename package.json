@@ -5,7 +5,7 @@
 	"repository": "https://github.com/ucekay/react-native-nitro-palette.git",
 	"author": "Ucekay",
 	"scripts": {
-		"bootstrap": "bun --filter=\"**\" install && bun tsc && bun --filter=\"example\" pods",
+		"bootstrap": "bun --filter=\"**\" install && bun tsc",
 		"typescript": "bun --filter=\"**\" typescript",
 		"release": "release-it"
 	},
@@ -13,6 +13,11 @@
 		"react-native-nitro-palette",
 		"example"
 	],
+	"overrides": {
+		"@shopify/react-native-skia": "2.11.2",
+		"react": "19.2.3",
+		"react-native": "0.88.0-rc.0"
+	},
 	"devDependencies": {
 		"@jamesacarr/eslint-formatter-github-actions": "^0.2.0",
 		"@release-it/bumper": "^6.0.1",
