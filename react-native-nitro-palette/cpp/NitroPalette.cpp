@@ -12,9 +12,13 @@ namespace nitropalette {
 std::vector<std::string> NitroPalette::extractColors(
     const std::shared_ptr<ArrayBuffer>& source, double colorCount,
     double quality, bool ignoreWhite) {
-  currentImageSize_ = source->size();
+  if (!source) {
+    throw std::runtime_error("Source buffer is null");
+  }
 
-  if (!source || currentImageSize_ < 4 || currentImageSize_ % 4 != 0) {
+  const size_t size = source->size();
+
+  if (size < 4 || size % 4 != 0) {
     throw std::runtime_error("Invalid source buffer size or format");
   }
 
@@ -23,7 +27,7 @@ std::vector<std::string> NitroPalette::extractColors(
   const int colorCountInt = static_cast<int>(colorCount);
 
   auto pixels = source->data();
-  std::vector<uint8_t> pixelsVector(pixels, pixels + currentImageSize_);
+  std::vector<uint8_t> pixelsVector(pixels, pixels + size);
 
   auto colorMap = MMCQ::quantize(pixelsVector, colorCountInt,
                                  static_cast<int>(quality), ignoreWhite);
@@ -61,12 +65,11 @@ NitroPalette::extractColorsAsync(const std::shared_ptr<ArrayBuffer>& source,
   std::vector<uint8_t> sourceCopy(sourceData, sourceData + sourceSize);
 
   return Promise<std::vector<std::string>>::async(
-      [this, sourceCopy = std::move(sourceCopy), colorCount, quality,
+      [sourceCopy = std::move(sourceCopy), colorCount, quality,
        ignoreWhite]() {
-        currentImageSize_ = sourceCopy.size();
+        const size_t size = sourceCopy.size();
 
-        if (sourceCopy.empty() || currentImageSize_ < 4 ||
-            currentImageSize_ % 4 != 0) {
+        if (size < 4 || size % 4 != 0) {
           throw std::runtime_error("Invalid source buffer size or format");
         }
 
