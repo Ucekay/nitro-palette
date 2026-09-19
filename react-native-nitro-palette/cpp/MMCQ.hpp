@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <memory>
 #include <iostream>
+#include <optional>
+#include <string>
 
 class MMCQ {
  public:
@@ -93,7 +95,8 @@ class MMCQ {
                                const std::vector<int>& lookAheadSum, int total);
 
   static void iterate(std::vector<VBox>& queue,
-                      bool (*comparator)(const VBox&, const VBox&), int target,
+                      bool (*comparator)(const VBox&, const VBox&),
+                      size_t target,
                       const std::vector<int>& histogram);
 
   static bool compareByCount(const VBox& a, const VBox& b);
